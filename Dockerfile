@@ -25,4 +25,8 @@ USER ujot
 
 CMD echo "Hello World"
 
-CMD sbt run
+# CMD sbt run
+
+# CMD while true; do sleep 1000; done
+
+WORKDIR ~
