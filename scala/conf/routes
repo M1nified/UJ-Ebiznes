@@ -13,4 +13,30 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-      
+# Shop
+
+GET     /products                   controllers.ProductsController.getAll
+POST    /products                   controllers.ProductsController.create
+GET     /products/:id               controllers.ProductsController.getById(id)
+PUT     /products/:id               controllers.ProductsController.update(id)
+
+GET     /orders                     controllers.OrdersController.getAll
+POST    /orders                     controllers.OrdersController.create
+GET     /orders/:id                 controllers.OrdersController.getById(id)
+PUT     /orders/:id                 controllers.OrdersController.update(id)
+
+GET     /categories                 controllers.CategoriesController.getAll
+POST    /categories                 controllers.CategoriesController.create
+GET     /categories/:id             controllers.CategoriesController.getById(id)
+PUT     /categories/:id             controllers.CategoriesController.update(id)
+
+GET     /inventory                  controllers.InventoryController.getAll
+POST    /inventory                  controllers.InventoryController.create
+GET     /inventory/:id              controllers.InventoryController.getById(id)
+PUT     /inventory/:id              controllers.InventoryController.update(id)
+
+POST    /users                      controllers.UsersController.create
+GET     /users/:id                  controllers.UsersController.getById(id)
+PUT     /users/:id                  controllers.UsersController.update(id)
+
+GET     /auth                       controllers.AuthController.index
