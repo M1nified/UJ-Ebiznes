@@ -22,6 +22,8 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
     def parentId = column[Int]("category_parent_id")
 
+    def parentId_fk = foreignKey("category_category_parent_id", parentId, category)(_.id)
+
     def * = (id, name, description, parentId) <> ((Category.apply _).tupled, Category.unapply)
   }
 
@@ -29,7 +31,7 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
   def create(name: String, description: String = "", parentId: Int = -1): Future[Category] = db.run {
 
-    (category.map(c => (c.name, c.description, parentId))
+    (category.map(c => (c.name, c.description, c.parentId))
 
       returning category.map(_.id)
 
