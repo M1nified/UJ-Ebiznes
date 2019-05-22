@@ -19,11 +19,11 @@ class OrderProductRepositoryRepository @Inject()(dbConfigProvider: DatabaseConfi
 
     def orderId = column[Int]("order_id")
 
-    def orderId_fk = foreignKey("order_id", orderId, order)(_.id)
+    private def orderId_fk = foreignKey("order_id", orderId, order)(_.id)
     
     def productId = column[Int]("product_id")
 
-    def productId_fk = foreignKey("product_id", productId, product)(_.id)
+    private def productId_fk = foreignKey("product_id", productId, product)(_.id)
     
     def amount = column[Int]("order_product_amount")
 

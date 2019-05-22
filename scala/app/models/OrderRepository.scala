@@ -5,6 +5,7 @@ import java.sql.Timestamp
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
+import slick.sql.SqlProfile.ColumnOption.SqlType
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,16 +22,16 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
 
     def userId = column[Int]("user_id")
 
-    def userId_fk = foreignKey("user_id", userId, user)(_.id)
+    private def userId_fk = foreignKey("user_id", userId, user)(_.id)
 
-    def createdAt = column[Timestamp]("order_created_at")
+    def createdAt = column[Timestamp]("order_created_at", SqlType("timestamp not null default CURRENT_TIMESTAMP"))
 
     def * = (id, userId, createdAt) <> ((Order.apply _).tupled, Order.unapply)
   }
 
   import userRepository.UserTable
 
-  val order = TableQuery[OrderTable]
+  private val order = TableQuery[OrderTable]
 
   private val user = TableQuery[UserTable]
 

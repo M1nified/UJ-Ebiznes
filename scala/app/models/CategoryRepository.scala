@@ -7,7 +7,7 @@ import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+  protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
@@ -27,7 +27,7 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
     def * = (id, name, description, parentId) <> ((Category.apply _).tupled, Category.unapply)
   }
 
-  val category = TableQuery[CategoryTable]
+  private val category = TableQuery[CategoryTable]
 
   def create(name: String, description: String = "", parentId: Int = -1): Future[Category] = db.run {
 

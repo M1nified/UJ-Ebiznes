@@ -7,7 +7,7 @@ import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+  protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
@@ -37,7 +37,7 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
     def * = (id,  name, name2, password, email, country, street, city, address, postal) <> ((User.apply _).tupled, User.unapply)
   }
 
-  val user = TableQuery[UserTable]
+  private val user = TableQuery[UserTable]
 
   def create(name: String, name2: String, password: String, email: String, country: String, street: String, city: String, address: String, postal: String): Future[User] = db.run {
 

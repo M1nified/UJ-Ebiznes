@@ -3,15 +3,17 @@ package models
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
-import models.CategoryRepository
+//import models.CategoryRepository
 import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+  protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
+
+  import categoryRepository.CategoryTable
 
   class ProductTable(tag: Tag) extends Table[Product](tag, "product") {
 
@@ -31,12 +33,10 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def categoryId = column[Int]("product_category_id")
 
-    def categoryId_fk = foreignKey("category_id", categoryId, cat)(_.id)
+    private def categoryId_fk = foreignKey("category_id", categoryId, cat)(_.id)
 
     def * = (id, name, description, price, image, unavailable, categoryId) <> ((Product.apply _).tupled, Product.unapply)
   }
-
-  import categoryRepository.CategoryTable
 
   private val product = TableQuery[ProductTable]
 

@@ -4,16 +4,16 @@ import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-import models.ProductRepository
-
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+  protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
+
+  import productRepository.ProductTable
 
   class InventoryTable(tag: Tag) extends Table[Inventory](tag, "inventory") {
 
@@ -21,16 +21,15 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
 
     def productId = column[Int]("product_id")
 
-    def productId_fk = foreignKey("inventory_product_id", productId, product)(_.id)
+    private def productId_fk = foreignKey("inventory_product_id", productId, product)(_.id)
 
     def inventoryCount = column[Int]("inventory_count")
 
     def * = (id, productId, inventoryCount) <> ((Inventory.apply _).tupled, Inventory.unapply)
   }
 
-  import productRepository.ProductTable
 
-  val inventory = TableQuery[InventoryTable]
+  private val inventory = TableQuery[InventoryTable]
 
   private val product = TableQuery[ProductTable]
 
