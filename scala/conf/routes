@@ -35,6 +35,7 @@ POST    /inventory                  controllers.InventoryController.create
 GET     /inventory/:id              controllers.InventoryController.getById(id)
 PUT     /inventory/:id              controllers.InventoryController.update(id)
 
+GET     /users                      controllers.UsersController.getAll
 POST    /users                      controllers.UsersController.create
 GET     /users/:id                  controllers.UsersController.getById(id)
 PUT     /users/:id                  controllers.UsersController.update(id)

@@ -12,15 +12,18 @@ scalaVersion := "2.12.2"
 
 libraryDependencies ++= Seq(
 //  jdbc ,
+  evolutions,
   ehcache , 
   ws , 
   specs2 % Test ,
   guice )
 
+libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.15"
+//libraryDependencies += "mysql" % "mysql-connector-java" % "6.0.6"
+
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-slick" % "3.0.0",
-  "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0",
-  "mysql" % "mysql-connector-java" % "8.0.15"
+"com.typesafe.play" %% "play-slick" % "3.0.0",
+"com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
