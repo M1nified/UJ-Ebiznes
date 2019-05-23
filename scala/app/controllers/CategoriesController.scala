@@ -2,13 +2,22 @@ package controllers
 
 import javax.inject._
 import play.api.mvc._
+import models.CategoryRepository
+import play.api.libs.json.Json
+
+import scala.concurrent.ExecutionContext
 
 /**
   */
 @Singleton
-class CategoriesController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class CategoriesController @Inject()(categoryRepository: CategoryRepository, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
-  def getAll = Action { Ok("") }
+  def getAll = Action.async {
+    implicit request =>
+      categoryRepository.list().map {
+        category => Ok(Json.toJson(category))
+      }
+  }
 
   def getById(id: String) = Action { Ok("") }
 
