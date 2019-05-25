@@ -23,7 +23,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def description = column[String]("product_description")
 
-    def parentId = column[Int]("product_parent_id")
+//    def parentId = column[Int]("product_parent_id")
 
     def price = column[Int]("product_price")
 
@@ -31,7 +31,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def unavailable = column[Boolean]("product_unavailable")
 
-    def categoryId = column[Int]("product_category_id")
+    def categoryId = column[Int]("category_id")
 
     private def categoryId_fk = foreignKey("category_id", categoryId, cat)(_.id)
 

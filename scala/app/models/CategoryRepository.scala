@@ -20,7 +20,7 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
     def description = column[String]("category_description")
 
-    def parentId = column[Int]("category_parent_id")
+    def parentId = column[Option[Int]]("category_parent_id")
 
     def parentId_fk = foreignKey("category_category_parent_id", parentId, category)(_.id)
 
@@ -29,7 +29,7 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
   private val category = TableQuery[CategoryTable]
 
-  def create(name: String, description: String = "", parentId: Int = -1): Future[Category] = db.run {
+  def create(name: String, description: String = "", parentId: Option[Int]): Future[Category] = db.run {
 
     (category.map(c => (c.name, c.description, c.parentId))
 
