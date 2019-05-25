@@ -1,7 +1,8 @@
-import play.api.http.HttpFilters
-import play.filters.csrf.CSRFFilter
-import javax.inject.Inject
+package global
 
-class Filters @Inject() (csrfFilter: CSRFFilter) extends HttpFilters {
-  def filters = Seq(csrfFilter)
-}
+import javax.inject.Inject
+import play.api.http.DefaultHttpFilters
+import play.filters.cors.CORSFilter
+
+class Filters @Inject() (corsFilter: CORSFilter)
+  extends DefaultHttpFilters(corsFilter)
