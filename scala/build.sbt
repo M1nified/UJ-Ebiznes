@@ -16,7 +16,9 @@ libraryDependencies ++= Seq(
   ehcache , 
   ws , 
   specs2 % Test ,
-  guice )
+  guice,
+  filters
+)
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.15"
 //libraryDependencies += "mysql" % "mysql-connector-java" % "6.0.6"
