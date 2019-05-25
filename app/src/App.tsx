@@ -1,24 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
+import UsersList from './components/usersList/UsersList';
+import ProductsList from './components/productsList/ProductsList';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Link to="/users">Users list</Link>
+        <Link to="/products">Products list</Link>
+        {/* <Route path="/" component={} /> */}
+        <Route path="/users" component={UsersList} />
+        <Route path="/products" component={ProductsList} />
+      </Router>
     </div>
   );
 }
