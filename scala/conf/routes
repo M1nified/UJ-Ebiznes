@@ -18,31 +18,41 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /products                   controllers.ProductsController.getAll
 +nocsrf
 POST    /products                   controllers.ProductsController.create
-GET     /products/:id               controllers.ProductsController.getById(id:Int)
-PUT     /products/:id               controllers.ProductsController.update(id:Int)
+GET     /products/:id               controllers.ProductsController.getById(id: Int)
+PUT     /products/:id               controllers.ProductsController.update(id: Int)
++nocsrf
+DELETE  /products/:id               controllers.ProductsController.delete(id: Int)
 
 GET     /orders                     controllers.OrdersController.getAll
 +nocsrf
 POST    /orders                     controllers.OrdersController.create
-GET     /orders/:id                 controllers.OrdersController.getById(id:Int)
-PUT     /orders/:id                 controllers.OrdersController.update(id:Int)
+GET     /orders/:id                 controllers.OrdersController.getById(id: Int)
+PUT     /orders/:id                 controllers.OrdersController.update(id: Int)
++nocsrf
+DELETE  /order/:id                  controllers.OrdersController.delete(id: Int)
 
 GET     /categories                 controllers.CategoriesController.getAll
 +nocsrf
 POST    /categories                 controllers.CategoriesController.create
-GET     /categories/:id             controllers.CategoriesController.getById(id:Int)
-PUT     /categories/:id             controllers.CategoriesController.update(id:Int)
+GET     /categories/:id             controllers.CategoriesController.getById(id: Int)
+PUT     /categories/:id             controllers.CategoriesController.update(id: Int)
++nocsrf
+DELETE  /categories/:id             controllers.CategoriesController.delete(id: Int)
 
 GET     /inventory                  controllers.InventoryController.getAll
 +nocsrf
 POST    /inventory                  controllers.InventoryController.create
-GET     /inventory/:id              controllers.InventoryController.getById(id:Int)
-PUT     /inventory/:id              controllers.InventoryController.update(id:Int)
+GET     /inventory/:id              controllers.InventoryController.getById(id: Int)
+PUT     /inventory/:id              controllers.InventoryController.update(id: Int)
++nocsrf
+DELETE  /inventory/:id              controllers.InventoryController.delete(id: Int)
 
 GET     /users                      controllers.UsersController.getAll
 +nocsrf
 POST    /users                      controllers.UsersController.create
-GET     /users/:id                  controllers.UsersController.getById(id:Int)
-PUT     /users/:id                  controllers.UsersController.update(id:Int)
+GET     /users/:id                  controllers.UsersController.getById(id: Int)
+PUT     /users/:id                  controllers.UsersController.update(id: Int)
++nocsrf
+DELETE  /users/:id                  controllers.UsersController.delete(id: Int)
 
 GET     /auth                       controllers.AuthController.index

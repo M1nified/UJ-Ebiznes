@@ -51,4 +51,8 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
   def findById(id: Int): Future[Option[Inventory]] = db.run{
     inventory.filter(_.id === id).result.headOption
   }
+
+  def delete(id: Int): Future[Unit] = db.run{
+    (inventory.filter(_.id === id).delete).map(_ => ())
+  }
 }

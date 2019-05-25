@@ -44,4 +44,8 @@ class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     admin.filter(_.id === id).result.headOption
   }
 
+  def delete(id: Int): Future[Unit] = db.run{
+    (admin.filter(_.id === id).delete).map(_ => ())
+  }
+
 }

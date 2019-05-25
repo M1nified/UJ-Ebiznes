@@ -74,6 +74,10 @@ class UsersController @Inject()(userRepository: UserRepository, cc: ControllerCo
 
   def update(id: Int) = Action { Ok("") }
 
+  def delete(id: Int) = Action.async(
+    userRepository.delete(id).map(_ => Ok(""))
+  )
+
 }
 
 case class CreateUserForm(name: String, name2: String, password: String, email: String, country: String, street: String, city: String, address: String, postal: String)

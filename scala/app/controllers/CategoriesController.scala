@@ -65,6 +65,10 @@ class CategoriesController @Inject()(categoryRepository: CategoryRepository, cc:
 
   def update(id: Int) = Action { Ok("") }
 
+  def delete(id: Int) = Action.async(
+    categoryRepository.delete(id).map(_ => Ok(""))
+  )
+
 }
 
 case class CreateCategoryForm(name: String, description: String, parentId: Option[Int])

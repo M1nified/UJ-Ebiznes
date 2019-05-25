@@ -53,4 +53,8 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
   def findById(id: Int): Future[Option[Order]] = db.run{
     order.filter(_.id === id).result.headOption
   }
+
+  def delete(id: Int): Future[Unit] = db.run{
+    (order.filter(_.id === id).delete).map(_ => ())
+  }
 }

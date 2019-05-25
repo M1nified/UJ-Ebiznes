@@ -64,6 +64,10 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
 
   def update(id: Int) = Action { Ok("") }
 
+  def delete(id: Int) = Action.async(
+    orderRepository.delete(id).map(_ => Ok(""))
+  )
+
 }
 
 case class CreateOrderForm(userId: Int, createdAt: Timestamp)

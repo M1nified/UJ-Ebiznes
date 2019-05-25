@@ -69,6 +69,10 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
 
   def update(id: Int) = Action { Ok("") }
 
+  def delete(id: Int) = Action.async(
+    productRepository.delete(id).map(_ => Ok(""))
+  )
+
 }
 
 case class CreateProductForm(name: String, description: String, price: Int, image: String, unavailable: Boolean, categoryId: Int)

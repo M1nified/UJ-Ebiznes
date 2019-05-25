@@ -60,6 +60,10 @@ class InventoryController @Inject()(inventoryRepository: InventoryRepository,cc:
 
   def update(id: Int) = Action { Ok("") }
 
+  def delete(id: Int) = Action.async(
+    inventoryRepository.delete(id).map(_ => Ok(""))
+  )
+
 }
 
 case class CreateInventoryForm(productId: Int, inventoryCount: Int)
