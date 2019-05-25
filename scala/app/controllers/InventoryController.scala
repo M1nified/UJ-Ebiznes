@@ -20,7 +20,18 @@ class InventoryController @Inject()(inventoryRepository: InventoryRepository,cc:
     )
   )
 
-  def getById(id: Int) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit request =>
+    val options = for {
+      maybeInventory <- inventoryRepository.findById(id)
+    } yield (maybeInventory)
+
+    options.map { case (opt) =>
+      opt match {
+        case Some(inventory) => Ok(Json.toJson(inventory))
+        case None => NotFound
+      }
+    }
+  }
 
   def create = Action { Ok("") }
 

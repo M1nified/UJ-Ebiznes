@@ -20,7 +20,18 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
     )
   )
 
-  def getById(id: Int) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit request =>
+    val options = for {
+      maybeProduct <- productRepository.findById(id)
+    } yield (maybeProduct)
+
+    options.map { case (opt) =>
+      opt match {
+        case Some(product) => Ok(Json.toJson(product))
+        case None => NotFound
+      }
+    }
+  }
 
   def create = Action { Ok("") }
 

@@ -19,7 +19,18 @@ class CategoriesController @Inject()(categoryRepository: CategoryRepository, cc:
       }
   }
 
-  def getById(id: Int) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit request =>
+    val options = for {
+      maybeCategory <- categoryRepository.findById(id)
+    } yield (maybeCategory)
+
+    options.map { case (opt) =>
+      opt match {
+        case Some(category) => Ok(Json.toJson(category))
+        case None => NotFound
+      }
+    }
+  }
 
   def create = Action { Ok("") }
 

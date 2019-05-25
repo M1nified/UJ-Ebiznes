@@ -21,17 +21,16 @@ class UsersController @Inject()(userRepository: UserRepository, cc: ControllerCo
   }
 
   def getById(id: Int) = Action.async { implicit request =>
-    val computerAndOptions = for {
-      user <- userRepository.findById(id)
-    } yield (user)
+    val options = for {
+      maybeUser <- userRepository.findById(id)
+    } yield (maybeUser)
 
-    computerAndOptions.map { case (computer) =>
-      computer match {
+    options.map { case (opt) =>
+      opt match {
         case Some(user) => Ok(Json.toJson(user))
         case None => NotFound
       }
     }
-
   }
 
   def create = Action { Ok("") }

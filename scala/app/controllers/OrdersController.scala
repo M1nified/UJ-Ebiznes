@@ -19,7 +19,18 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
     )
   )
 
-  def getById(id: Int) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit request =>
+    val options = for {
+      maybeOrder <- orderRepository.findById(id)
+    } yield (maybeOrder)
+
+    options.map { case (opt) =>
+      opt match {
+        case Some(order) => Ok(Json.toJson(order))
+        case None => NotFound
+      }
+    }
+  }
 
   def create = Action { Ok("") }
 
