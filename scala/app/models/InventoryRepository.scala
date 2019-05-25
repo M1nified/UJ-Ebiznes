@@ -47,4 +47,8 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
   def list(): Future[Seq[Inventory]] = db.run {
     inventory.result
   }
+
+  def findById(id: Int): Future[Option[Inventory]] = db.run{
+    inventory.filter(_.id === id).result.headOption
+  }
 }

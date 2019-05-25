@@ -57,4 +57,8 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
   def list(): Future[Seq[Product]] = db.run {
     product.result
   }
+
+  def findById(id: Int): Future[Option[Product]] = db.run{
+    product.filter(_.id === id).result.headOption
+  }
 }

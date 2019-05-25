@@ -49,4 +49,8 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
   def list(): Future[Seq[Order]] = db.run {
     order.result
   }
+
+  def findById(id: Int): Future[Option[Order]] = db.run{
+    order.filter(_.id === id).result.headOption
+  }
 }

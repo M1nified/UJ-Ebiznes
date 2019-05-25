@@ -39,4 +39,9 @@ class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
   def list(): Future[Seq[Admin]] = db.run {
     admin.result
   }
+
+  def findById(id: Int): Future[Option[Admin]] = db.run{
+    admin.filter(_.id === id).result.headOption
+  }
+
 }
