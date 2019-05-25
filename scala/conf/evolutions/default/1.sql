@@ -8,7 +8,7 @@ CREATE TABLE `admin` (
   `admin_password` varchar(45) NOT NULL,
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY `admin_email_UNIQUE` (`admin_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `user` (
                         `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -23,7 +23,7 @@ CREATE TABLE `user` (
                         `user_name_2` varchar(45) DEFAULT NULL,
                         PRIMARY KEY (`user_id`),
                         UNIQUE KEY `userEmail_UNIQUE` (`user_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,7 +34,7 @@ CREATE TABLE `category` (
   UNIQUE KEY `category_name_UNIQUE` (`category_name`),
   KEY `category_category_parent_id_idx` (`category_parent_id`),
   CONSTRAINT `category_category_parent_id` FOREIGN KEY (`category_parent_id`) REFERENCES `category` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`),
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `inventory` (
                              `inventory_id` int(11) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `inventory` (
                              PRIMARY KEY (`inventory_id`),
                              KEY `product_id_idx` (`product_id`),
                              CONSTRAINT `inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `order_product` (
  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,7 +77,7 @@ CREATE TABLE `order_product` (
  KEY `product_id_idx` (`product_id`),
  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- !Downs
