@@ -20,10 +20,10 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
     )
   )
 
-  def getById(id: String) = Action { Ok("") }
+  def getById(id: Int) = Action { Ok("") }
 
   def create = Action { Ok("") }
 
-  def update(id: String) = Action { Ok("") }
+  def update(id: Int) = Action { Ok("") }
 
 }

@@ -17,27 +17,27 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /products                   controllers.ProductsController.getAll
 POST    /products                   controllers.ProductsController.create
-GET     /products/:id               controllers.ProductsController.getById(id)
-PUT     /products/:id               controllers.ProductsController.update(id)
+GET     /products/:id               controllers.ProductsController.getById(id:Int)
+PUT     /products/:id               controllers.ProductsController.update(id:Int)
 
 GET     /orders                     controllers.OrdersController.getAll
 POST    /orders                     controllers.OrdersController.create
-GET     /orders/:id                 controllers.OrdersController.getById(id)
-PUT     /orders/:id                 controllers.OrdersController.update(id)
+GET     /orders/:id                 controllers.OrdersController.getById(id:Int)
+PUT     /orders/:id                 controllers.OrdersController.update(id:Int)
 
 GET     /categories                 controllers.CategoriesController.getAll
 POST    /categories                 controllers.CategoriesController.create
-GET     /categories/:id             controllers.CategoriesController.getById(id)
-PUT     /categories/:id             controllers.CategoriesController.update(id)
+GET     /categories/:id             controllers.CategoriesController.getById(id:Int)
+PUT     /categories/:id             controllers.CategoriesController.update(id:Int)
 
 GET     /inventory                  controllers.InventoryController.getAll
 POST    /inventory                  controllers.InventoryController.create
-GET     /inventory/:id              controllers.InventoryController.getById(id)
-PUT     /inventory/:id              controllers.InventoryController.update(id)
+GET     /inventory/:id              controllers.InventoryController.getById(id:Int)
+PUT     /inventory/:id              controllers.InventoryController.update(id:Int)
 
 GET     /users                      controllers.UsersController.getAll
 POST    /users                      controllers.UsersController.create
-GET     /users/:id                  controllers.UsersController.getById(id)
-PUT     /users/:id                  controllers.UsersController.update(id)
+GET     /users/:id                  controllers.UsersController.getById(id:Int)
+PUT     /users/:id                  controllers.UsersController.update(id:Int)
 
 GET     /auth                       controllers.AuthController.index

@@ -53,4 +53,8 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
   def list(): Future[Seq[User]] = db.run {
     user.result
   }
+
+  def findById(userId: Int): Future[Option[User]] = db.run{
+    user.filter(_.id === userId).result.headOption
+  }
 }

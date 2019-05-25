@@ -20,10 +20,22 @@ class UsersController @Inject()(userRepository: UserRepository, cc: ControllerCo
     }
   }
 
-  def getById(id: String) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit request =>
+    val computerAndOptions = for {
+      user <- userRepository.findById(id)
+    } yield (user)
+
+    computerAndOptions.map { case (computer) =>
+      computer match {
+        case Some(user) => Ok(Json.toJson(user))
+        case None => NotFound
+      }
+    }
+
+  }
 
   def create = Action { Ok("") }
 
-  def update(id: String) = Action { Ok("") }
+  def update(id: Int) = Action { Ok("") }
 
 }
