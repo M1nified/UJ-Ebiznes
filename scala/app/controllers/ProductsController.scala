@@ -20,7 +20,7 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
       "name" -> nonEmptyText,
       "description"-> nonEmptyText,
       "price" -> number,
-      "image" -> nonEmptyText,
+      "image" -> optional(nonEmptyText),
       "unavailable"-> boolean,
       "categoryId" -> number
     )(CreateProductForm.apply)(CreateProductForm.unapply)
@@ -46,6 +46,14 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
       }
     }
   }
+
+  def getByCategoryId(id: Int) = Action.async(
+    implicit request => (
+      productRepository.findByCategoryId(id).map(
+        product => Ok(Json.toJson(product))
+      )
+      )
+  )
 
   def create = Action.async { implicit request =>
     productForm.bindFromRequest.fold(
@@ -96,4 +104,4 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
 
 }
 
-case class CreateProductForm(name: String, description: String, price: Int, image: String, unavailable: Boolean, categoryId: Int)
+case class CreateProductForm(name: String, description: String, price: Int, image: Option[String], unavailable: Boolean, categoryId: Int)

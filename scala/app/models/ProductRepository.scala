@@ -27,7 +27,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def price = column[Int]("product_price")
 
-    def image = column[String]("product_image")
+    def image = column[Option[String]]("product_image")
 
     def unavailable = column[Boolean]("product_unavailable")
 
@@ -43,7 +43,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
   private val cat = TableQuery[CategoryTable]
 
 
-  def create(name: String, description: String, price: Int, image: String, unavailable: Boolean, categoryId: Int): Future[Product] = db.run {
+  def create(name: String, description: String, price: Int, image: Option[String], unavailable: Boolean, categoryId: Int): Future[Product] = db.run {
 
     (product.map(c => (c.name, c.description, c.price, c.image, c.unavailable, c.categoryId))
 
@@ -64,6 +64,10 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
   def findById(id: Int): Future[Option[Product]] = db.run{
     product.filter(_.id === id).result.headOption
+  }
+
+  def findByCategoryId(id: Int): Future[Seq[Product]] = db.run{
+    product.filter(_.categoryId === id).result
   }
 
   def delete(id: Int): Future[Unit] = db.run{

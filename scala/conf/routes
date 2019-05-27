@@ -13,6 +13,7 @@ GET     /products                   controllers.ProductsController.getAll
 +nocsrf
 POST    /products                   controllers.ProductsController.create
 GET     /products/:id               controllers.ProductsController.getById(id: Int)
+GET     /products/byCategory/:categoryId    controllers.ProductsController.getByCategoryId(categoryId: Int)
 PUT     /products/:id               controllers.ProductsController.update(id: Int)
 +nocsrf
 DELETE  /products/:id               controllers.ProductsController.delete(id: Int)
