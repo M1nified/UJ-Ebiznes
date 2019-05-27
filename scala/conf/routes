@@ -29,7 +29,7 @@ POST    /orders                     controllers.OrdersController.create
 GET     /orders/:id                 controllers.OrdersController.getById(id: Int)
 PUT     /orders/:id                 controllers.OrdersController.update(id: Int)
 +nocsrf
-DELETE  /orders/:id                  controllers.OrdersController.delete(id: Int)
+DELETE  /orders/:id                 controllers.OrdersController.delete(id: Int)
 
 GET     /orderProducts              controllers.OrderProductController.getAll
 +nocsrf
