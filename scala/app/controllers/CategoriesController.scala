@@ -1,12 +1,11 @@
 package controllers
 
 import javax.inject._
-import play.api.mvc._
-import models.{Category, CategoryRepository}
+import models.CategoryRepository
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, _}
 import play.api.libs.json.Json
-import play.api.data.Forms._
+import play.api.mvc._
 //import play.filters.csrf.CSRFCheck
 
 import scala.concurrent.{ExecutionContext, Future}
