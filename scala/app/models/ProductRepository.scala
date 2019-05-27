@@ -54,6 +54,10 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
       ) += (name, description, price, image, unavailable, categoryId)
   }
 
+  def update(newValue: Product) = db.run{
+    product.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[Product]] = db.run {
     product.result
   }

@@ -46,6 +46,10 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
       ) += (userId, createdAt)
   }
 
+  def update(newValue: Order) = db.run{
+    order.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[Order]] = db.run {
     order.result
   }

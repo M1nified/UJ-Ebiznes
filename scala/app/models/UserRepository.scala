@@ -50,6 +50,10 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
       ) += (name, name2, password, email, country, street, city, address, postal)
   }
 
+  def update(newValue: User) = db.run{
+    user.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[User]] = db.run {
     user.result
   }

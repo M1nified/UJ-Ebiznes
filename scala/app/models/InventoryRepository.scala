@@ -44,6 +44,10 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
       ) += (productId, inventoryCount)
   }
 
+  def update(newValue: Inventory) = db.run{
+    inventory.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[Inventory]] = db.run {
     inventory.result
   }

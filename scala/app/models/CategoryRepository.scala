@@ -40,6 +40,10 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
       ) += (name, description, parentId)
   }
 
+  def update(newValue: Category) = db.run{
+    category.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[Category]] = db.run {
     category.result
   }

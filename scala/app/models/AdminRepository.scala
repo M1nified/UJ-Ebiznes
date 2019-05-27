@@ -36,6 +36,10 @@ class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
       ) += (email, password)
   }
 
+  def update(newValue: Admin): Future[Int] = db.run {
+    admin.insertOrUpdate(newValue)
+  }
+
   def list(): Future[Seq[Admin]] = db.run {
     admin.result
   }
