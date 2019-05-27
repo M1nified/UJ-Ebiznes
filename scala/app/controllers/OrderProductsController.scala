@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   */
 @Singleton
-class OrderProductController @Inject()(orderProductRepository: OrderProductRepository,cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
+class OrderProductsController @Inject()(orderProductRepository: OrderProductRepository, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   val orderProductForm: Form[CreateOrderProductForm] = Form {
     mapping(

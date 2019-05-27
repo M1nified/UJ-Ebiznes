@@ -25,13 +25,13 @@ PUT     /orders/:id                 controllers.OrdersController.update(id: Int)
 +nocsrf
 DELETE  /orders/:id                 controllers.OrdersController.delete(id: Int)
 
-GET     /orderProducts              controllers.OrderProductController.getAll
+GET     /orderProducts              controllers.OrderProductsController.getAll
 +nocsrf
-POST    /orderProducts              controllers.OrderProductController.create
-GET     /orderProducts/:id          controllers.OrderProductController.getById(id: Int)
-PUT     /orderProducts/:id          controllers.OrderProductController.update(id: Int)
+POST    /orderProducts              controllers.OrderProductsController.create
+GET     /orderProducts/:id          controllers.OrderProductsController.getById(id: Int)
+PUT     /orderProducts/:id          controllers.OrderProductsController.update(id: Int)
 +nocsrf
-DELETE  /orderProducts/:id          controllers.OrderProductController.delete(id: Int)
+DELETE  /orderProducts/:id          controllers.OrderProductsController.delete(id: Int)
 
 GET     /categories                 controllers.CategoriesController.getAll
 +nocsrf
@@ -41,13 +41,13 @@ PUT     /categories/:id             controllers.CategoriesController.update(id: 
 +nocsrf
 DELETE  /categories/:id             controllers.CategoriesController.delete(id: Int)
 
-GET     /inventory                  controllers.InventoryController.getAll
+GET     /inventories                controllers.InventoriesController.getAll
 +nocsrf
-POST    /inventory                  controllers.InventoryController.create
-GET     /inventory/:id              controllers.InventoryController.getById(id: Int)
-PUT     /inventory/:id              controllers.InventoryController.update(id: Int)
+POST    /inventories                controllers.InventoriesController.create
+GET     /inventories/:id            controllers.InventoriesController.getById(id: Int)
+PUT     /inventories/:id            controllers.InventoriesController.update(id: Int)
 +nocsrf
-DELETE  /inventory/:id              controllers.InventoryController.delete(id: Int)
+DELETE  /inventories/:id            controllers.InventoriesController.delete(id: Int)
 
 GET     /users                      controllers.UsersController.getAll
 +nocsrf
