@@ -60,8 +60,8 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
           product.image,
           product.unavailable,
           product.categoryId
-        ).map { user =>
-          Created(Json.toJson((user)))
+        ).map { product =>
+          Created(Json.toJson((product)))
         }
       }
     )
