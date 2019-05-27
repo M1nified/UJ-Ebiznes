@@ -10,6 +10,14 @@ const getAllProducts = async () => {
     }
 }
 
-export {
-    getAllProducts
+const getProductsForCategory = async (categoryId: number | string) => {
+    try {
+        const products: Product[] = (await Axios.get(`/products/byCategory/${categoryId}`)).data;
+        return products;
+    } catch (error) {
+        return [];
+    }
 }
+
+export { getAllProducts, getProductsForCategory };
+
