@@ -72,7 +72,31 @@ class UsersController @Inject()(userRepository: UserRepository, cc: ControllerCo
     )
   }
 
-  def update(id: Int) = Action { Ok("") }
+  def update(id: Int) =
+    Action.async(parse.json){
+      implicit request =>
+        userForm.bindFromRequest.fold(
+          _ => {
+            Future.successful(BadRequest("Failed to update user."))
+          },
+          user => {
+            userRepository.update(models.User(
+              id,
+              user.name,
+              user.name2,
+              user.password,
+              user.email,
+              user.country,
+              user.street,
+              user.city,
+              user.address,
+              user.postal,
+            )).map({ _ =>
+              Ok
+            })
+          }
+        )
+    }
 
   def delete(id: Int) = Action.async(
     userRepository.delete(id).map(_ => Ok(""))

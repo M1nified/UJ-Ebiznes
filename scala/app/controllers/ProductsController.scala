@@ -67,7 +67,28 @@ class ProductsController @Inject()(productRepository: ProductRepository,cc: Cont
     )
   }
 
-  def update(id: Int) = Action { Ok("") }
+  def update(id: Int) =
+    Action.async(parse.json){
+      implicit request =>
+        productForm.bindFromRequest.fold(
+          _ => {
+            Future.successful(BadRequest("Failed to update product."))
+          },
+          product => {
+            productRepository.update(models.Product(
+              id,
+              product.name,
+              product.description,
+              product.price,
+              product.image,
+              product.unavailable,
+              product.categoryId,
+            )).map({ _ =>
+              Ok
+            })
+          }
+        )
+    }
 
   def delete(id: Int) = Action.async(
     productRepository.delete(id).map(_ => Ok(""))

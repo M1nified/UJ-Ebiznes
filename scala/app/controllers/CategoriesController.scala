@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 import play.api.mvc._
-import models.CategoryRepository
+import models.{Category, CategoryRepository}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.libs.json.Json
@@ -63,7 +63,25 @@ class CategoriesController @Inject()(categoryRepository: CategoryRepository, cc:
         )
     }
 
-  def update(id: Int) = Action { Ok("") }
+  def update(id: Int) =
+    Action.async(parse.json){
+      implicit request =>
+        categoryForm.bindFromRequest.fold(
+          _ => {
+            Future.successful(BadRequest("Failed to update category."))
+          },
+          category => {
+            categoryRepository.update(models.Category(
+              id,
+              category.name,
+              category.description,
+              category.parentId
+            )).map({ _ =>
+              Ok
+            })
+          }
+        )
+    }
 
   def delete(id: Int) = Action.async(
     categoryRepository.delete(id).map(_ => Ok(""))

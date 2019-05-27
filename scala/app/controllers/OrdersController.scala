@@ -62,7 +62,24 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
     )
   }
 
-  def update(id: Int) = Action { Ok("") }
+  def update(id: Int) =
+    Action.async(parse.json){
+      implicit request =>
+        orderForm.bindFromRequest.fold(
+          _ => {
+            Future.successful(BadRequest("Failed to update order."))
+          },
+          order => {
+            orderRepository.update(models.Order(
+              id,
+              order.userId,
+              order.createdAt,
+            )).map({ _ =>
+              Ok
+            })
+          }
+        )
+    }
 
   def delete(id: Int) = Action.async(
     orderRepository.delete(id).map(_ => Ok(""))

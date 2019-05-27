@@ -58,7 +58,24 @@ class InventoryController @Inject()(inventoryRepository: InventoryRepository,cc:
     )
   }
 
-  def update(id: Int) = Action { Ok("") }
+  def update(id: Int) =
+    Action.async(parse.json){
+      implicit request =>
+        inventoryForm.bindFromRequest.fold(
+          _ => {
+            Future.successful(BadRequest("Failed to update inventory."))
+          },
+          inventory => {
+            inventoryRepository.update(models.Inventory(
+              id,
+              inventory.productId,
+              inventory.inventoryCount
+            )).map({ _ =>
+              Ok
+            })
+          }
+        )
+    }
 
   def delete(id: Int) = Action.async(
     inventoryRepository.delete(id).map(_ => Ok(""))
