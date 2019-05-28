@@ -1,10 +1,9 @@
-import React, { Component, useReducer } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { getAllOrders } from "../../controllers/OrdersController";
-import Order from "../../models/Order";
-import { number } from "prop-types";
-import User from "../../models/User";
-import { getAllUsers } from "../../controllers/UsersController";
+import { getAllOrders } from "../../../controllers/OrdersController";
+import { getAllUsers } from "../../../controllers/UsersController";
+import Order from "../../../models/Order";
+import User from "../../../models/User";
 
 type OrdersListState = {
     orders: Order[],

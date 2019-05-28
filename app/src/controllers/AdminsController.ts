@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Admin from "../models/Admin";
 
-type PostAdminBody = {
+export type PostAdminBody = {
     email: string,
     password: string,
 }

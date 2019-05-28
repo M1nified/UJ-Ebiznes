@@ -1,6 +1,12 @@
 import Axios from "axios";
 import Category from "../models/Category";
 
+export type PostCategoryBody = {
+    name: string,
+    description: string,
+    parentId: number | null
+}
+
 const getAllCategories = async () => {
     try {
         const categories: Category[] = (await Axios.get('/categories')).data;
@@ -19,17 +25,17 @@ const getCategory = async (categoryId: number | string) => {
     }
 }
 
-const postCategory = async (name: string, description: string, parentId: number | string | null = null) => {
+const postCategory = async (body: PostCategoryBody) => {
     try {
-        const resp = await Axios.post('/categories', {
-            name,
-            description,
-            parentId,
-        }, {
+        const resp = await Axios.post(
+            '/categories',
+            body,
+            {
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            })
+            }
+        )
         console.log(resp)
         if (resp.status !== 201)
             return false;

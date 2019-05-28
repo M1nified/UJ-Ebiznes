@@ -7,7 +7,7 @@ type PostProductBody = {
     price: number,
     image: string | null,
     unavailable: boolean,
-    categoryId: number,
+    categoryId: number | null,
 }
 
 const getAllProducts = async () => {

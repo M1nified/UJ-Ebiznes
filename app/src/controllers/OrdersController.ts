@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Order from "../models/Order";
 
-type PostOrderBody = {
+export type PostOrderBody = {
     userId: number,
     createdAt: Date,
 }

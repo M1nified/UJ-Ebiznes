@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Inventory from "../models/Inventory";
 
-type PostInventoryBody = {
+export type PostInventoryBody = {
     productId: number,
     inventoryCount: number,
 }

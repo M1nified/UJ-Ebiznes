@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { getAllCategories } from "../../controllers/CategoryController";
-import Category from "../../models/Category";
+import Category from "../../../models/Category";
+import { getAllCategories } from "../../../controllers/CategoryController";
 
 type CategoriesListState = {
     categories: Category[]

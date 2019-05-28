@@ -1,7 +1,7 @@
 import Axios from "axios";
 import OrderProduct from "../models/OrderProduct";
 
-type PostOrderProductBody = {
+export type PostOrderProductBody = {
     orderId: number,
     productId: number,
     amount: number

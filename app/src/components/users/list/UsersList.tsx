@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import User from "../../models/User";
-import { getAllUsers } from "../../controllers/UsersController";
+import User from "../../../models/User";
+import { getAllUsers } from "../../../controllers/UsersController";
 
 type UsersListState = {
     users: User[]

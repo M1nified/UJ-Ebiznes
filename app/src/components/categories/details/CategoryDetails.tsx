@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { RouteComponentProps } from "react-router";
-import { getAllCategories, getCategory } from "../../controllers/CategoryController";
-import Category from "../../models/Category";
-import Product from "../../models/Product";
-import { getProductsForCategory } from "../../controllers/ProductsController";
+import Category from "../../../models/Category";
+import Product from "../../../models/Product";
+import { getProductsForCategory } from "../../../controllers/ProductsController";
+import { getCategory } from "../../../controllers/CategoryController";
 
 type CategoryDetailsState = {
     category: Category | null,

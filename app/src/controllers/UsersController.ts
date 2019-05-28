@@ -1,16 +1,16 @@
 import Axios from "axios";
 import User from "../models/User";
 
-type PostUserBody = {
-    name: String,
-    name2: String,
-    password: String,
-    email: String,
-    country: String,
-    street: String,
-    city: String,
-    address: String,
-    postal: String,
+export type PostUserBody = {
+    name: string,
+    name2: string,
+    password: string,
+    email: string,
+    country: string,
+    street: string,
+    city: string,
+    address: string,
+    postal: string,
 }
 
 const getAllUsers = async () => {

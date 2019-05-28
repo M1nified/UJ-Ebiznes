@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { getAllUsers, getUser } from "../../controllers/UsersController";
-import Order from "../../models/Order";
-import OrderProduct from "../../models/OrderProduct";
-import Product from "../../models/Product";
+import { getAllUsers, getUser } from "../../../controllers/UsersController";
+import Order from "../../../models/Order";
+import OrderProduct from "../../../models/OrderProduct";
+import Product from "../../../models/Product";
 import { RouteComponentProps } from "react-router";
-import { getOrder } from "../../controllers/OrdersController";
-import { getOrderProductsForOrder } from "../../controllers/OrderProductsController";
-import User from "../../models/User";
-import { getAllProducts } from "../../controllers/ProductsController";
+import { getOrder } from "../../../controllers/OrdersController";
+import { getOrderProductsForOrder } from "../../../controllers/OrderProductsController";
+import User from "../../../models/User";
+import { getAllProducts } from "../../../controllers/ProductsController";
 
 type OrderDetailsState = {
     products: Product[],
