@@ -20,7 +20,28 @@ const getCategory = async (categoryId: number | string) => {
     }
 }
 
+const postCategory = async (name: string, description: string, parentId: number | string | null = null) => {
+    try {
+        const resp = await Axios.post('/categories', {
+            name,
+            description,
+            parentId,
+        }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+        console.log(resp)
+        if (resp.status !== 201)
+            return false;
+        return resp.data;
+    } catch (error) {
+        return false;
+    }
+}
+
 export {
     getAllCategories,
     getCategory,
+    postCategory,
 }

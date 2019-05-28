@@ -10,6 +10,16 @@ const getAllUsers = async () => {
     }
 }
 
+const getUser = async (userId: number | string) => {
+    try {
+        const user: User = (await Axios.get(`/users/${userId}`)).data;
+        return user;
+    } catch (error) {
+        return null;
+    }
+}
+
 export {
-    getAllUsers
+    getAllUsers,
+    getUser,
 }

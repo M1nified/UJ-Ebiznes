@@ -22,7 +22,6 @@ class CategoryDetails extends Component {
     }
 
     async componentDidMount() {
-        console.log(this.props);
         const { match: { params: { categoryId } } } = this.props as RouteComponentProps<CategoryDetailsMatchParams>;
         const [products, category] = await Promise.all([
             getProductsForCategory(categoryId),

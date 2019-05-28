@@ -1,39 +1,53 @@
-import React, { Component } from "react";
+import React, { Component, useReducer } from "react";
 import { Link } from "react-router-dom";
 import { getAllOrders } from "../../controllers/OrdersController";
 import Order from "../../models/Order";
+import { number } from "prop-types";
+import User from "../../models/User";
+import { getAllUsers } from "../../controllers/UsersController";
 
 type OrdersListState = {
-    orders: Order[]
+    orders: Order[],
+    usersMap: { [id: number]: User },
 }
 
 class OrdersList extends Component {
 
     state: OrdersListState = {
-        orders: []
+        orders: [],
+        usersMap: {},
     }
 
     async componentDidMount() {
         const orders = await getAllOrders();
+        const users = await getAllUsers();
+        const usersMap: { [id: number]: User } = {};
+        users.forEach(user => { usersMap[user.id] = user });
         this.setState({
-            orders
+            orders,
+            usersMap,
         })
     }
 
     render() {
-        const orderRows = this.state.orders.map((order, idx) => (
-            <tr key={idx}>
-                <td>{order.id}</td>
-                <td><Link to={`/order/${order.id}`} >Details</Link></td>
-            </tr>
-        ))
+        const orderRows = this.state.orders.map((order, idx) => {
+            const user = this.state.usersMap[order.userId];
+            return (
+                <tr key={idx}>
+                    <td>{order.id}</td>
+                    <td>{user.name} {user.name2}</td>
+                    <td><Link to={`/order/${order.id}`} >Details</Link></td>
+                </tr>
+            )
+        })
         return (
             <div>
                 <table>
                     <thead>
                         <tr>
-                            <td>Order ID</td>
-                            <td></td>
+                            <th>Order ID</th>
+                            <th>Client</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

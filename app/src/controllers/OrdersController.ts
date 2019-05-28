@@ -1,5 +1,5 @@
-import Order from "../models/Order";
 import Axios from "axios";
+import Order from "../models/Order";
 
 const getAllOrders = async () => {
     try {
@@ -10,6 +10,17 @@ const getAllOrders = async () => {
     }
 }
 
-export {
-    getAllOrders
+const getOrder = async (orderId: number | string) => {
+    try {
+        const order: Order = (await Axios.get(`/orders/${orderId}`)).data;
+        return order;
+    } catch (error) {
+        return null;
+    }
 }
+
+export {
+    getAllOrders,
+    getOrder
+};
+
