@@ -1,33 +1,33 @@
 import Axios from "axios";
-import Order from "../models/Order";
+import Admin from "../models/Admin";
 
-type PostOrderBody = {
-    userId: number,
-    createdAt: Date,
+type PostAdminBody = {
+    email: string,
+    password: string,
 }
 
-const getAllOrders = async () => {
+const getAllAdmins = async () => {
     try {
-        const orders: Order[] = (await Axios.get('/orders')).data;
-        return orders;
+        const list: Admin[] = (await Axios.get('/admins')).data;
+        return list;
     } catch (error) {
         return [];
     }
 }
 
-const getOrder = async (orderId: number | string) => {
+const getAdmin = async (id: number | string) => {
     try {
-        const order: Order = (await Axios.get(`/orders/${orderId}`)).data;
-        return order;
+        const single: Admin = (await Axios.get(`/admins/${id}`)).data;
+        return single;
     } catch (error) {
         return null;
     }
 }
 
-const postOrder = async (body: PostOrderBody) => {
+const postAdmin = async (body: PostAdminBody) => {
     try {
         const resp = await Axios.post(
-            '/orders',
+            '/admins',
             body,
             {
                 headers: {
@@ -43,9 +43,9 @@ const postOrder = async (body: PostOrderBody) => {
     }
 }
 
-const deleteOrder = async (id: number | string) => {
+const deleteAdmin = async (id: number | string) => {
     try {
-        const resp = await Axios.delete(`/orders/${id}`)
+        const resp = await Axios.delete(`/admins/${id}`)
         if (resp.status !== 200)
             return false;
         return true;
@@ -54,5 +54,5 @@ const deleteOrder = async (id: number | string) => {
     }
 }
 
-export { getAllOrders, getOrder, postOrder, deleteOrder, };
 
+export { getAllAdmins, getAdmin, postAdmin, deleteAdmin, };

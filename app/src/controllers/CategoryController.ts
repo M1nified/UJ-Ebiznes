@@ -1,6 +1,5 @@
-import Category from "../models/Category";
 import Axios from "axios";
-import { tsRestType } from "@babel/types";
+import Category from "../models/Category";
 
 const getAllCategories = async () => {
     try {
@@ -40,8 +39,15 @@ const postCategory = async (name: string, description: string, parentId: number 
     }
 }
 
-export {
-    getAllCategories,
-    getCategory,
-    postCategory,
+const deleteCategory = async (id: number | string) => {
+    try {
+        const resp = await Axios.delete(`/categories/${id}`)
+        if (resp.status !== 200)
+            return false;
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
+
+export { getAllCategories, getCategory, postCategory, deleteCategory, };
