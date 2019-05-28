@@ -43,6 +43,14 @@ class OrderProductsController @Inject()(orderProductRepository: OrderProductRepo
     }
   }
 
+  def getByOrderId(orderId: Int) = Action.async(
+    implicit request => (
+      orderProductRepository.findByOrderId(orderId).map(
+        orderProduct => Ok(Json.toJson(orderProduct))
+      )
+      )
+  )
+
   def create = Action.async { implicit request =>
     orderProductForm.bindFromRequest.fold(
       errorForm => {

@@ -13,18 +13,18 @@ class OrderProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider,
   import dbConfig._
   import profile.api._
 
-  class OrderProductTable(tag: Tag) extends Table[OrderProduct](tag, "order") {
+  class OrderProductTable(tag: Tag) extends Table[OrderProduct](tag, "order_product") {
 
-    def id = column[Int]("order_id", O.PrimaryKey, O.AutoInc)
+    def id = column[Int]("order_product_id", O.PrimaryKey, O.AutoInc)
 
     def orderId = column[Int]("order_id")
 
     private def orderId_fk = foreignKey("order_id", orderId, order)(_.id)
-    
+
     def productId = column[Int]("product_id")
 
     private def productId_fk = foreignKey("product_id", productId, product)(_.id)
-    
+
     def amount = column[Int]("order_product_amount")
 
     def * = (id, orderId, productId, amount) <> ((OrderProduct.apply _).tupled, OrderProduct.unapply)
@@ -60,6 +60,10 @@ class OrderProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider,
 
   def findById(id: Int): Future[Option[OrderProduct]] = db.run{
     orderProduct.filter(_.id === id).result.headOption
+  }
+
+  def findByOrderId(orderId: Int): Future[Seq[OrderProduct]] = db.run{
+    orderProduct.filter(_.orderId === orderId).result
   }
 
   def delete(id: Int): Future[Unit] = db.run{
