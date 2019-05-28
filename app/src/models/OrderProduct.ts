@@ -1,8 +1,8 @@
 type OrderProduct = {
-    id: Number,
-    orderId: Number,
-    productId: Number,
-    amount: Number,
+    id: number,
+    orderId: number,
+    productId: number,
+    amount: number,
 }
 
 export default OrderProduct;

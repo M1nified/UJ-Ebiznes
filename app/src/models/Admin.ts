@@ -1,7 +1,7 @@
 type Admin = {
-    id: Number,
-    email: String,
-    password: String,
+    id: number,
+    email: string,
+    password: string,
 }
 
 export default Admin;

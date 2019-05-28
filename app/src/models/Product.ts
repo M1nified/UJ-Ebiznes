@@ -1,11 +1,11 @@
 type Product = {
-    id: Number,
-    name: String,
-    description: String,
-    price: Number,
-    image: String,
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    image: string,
     unavailable: Boolean,
-    categoryId: Number,
+    categoryId: number,
 }
 
 export default Product;

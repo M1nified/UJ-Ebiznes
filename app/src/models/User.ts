@@ -1,14 +1,14 @@
 type User = {
-    id: Number,
-    name: String,
-    name2: String,
-    password: String,
-    email: String,
-    country: String,
-    street: String,
-    city: String,
-    address: String,
-    postal: String,
+    id: number,
+    name: string,
+    name2: string,
+    password: string,
+    email: string,
+    country: string,
+    street: string,
+    city: string,
+    address: string,
+    postal: string,
 }
 
 export default User;

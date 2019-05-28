@@ -1,7 +1,7 @@
 type Order = {
-    id: Number,
-    userId: Number,
-    createdAt: String,
+    id: number,
+    userId: number,
+    createdAt: string,
 }
 
 export default Order;

@@ -1,8 +1,8 @@
 type Category = {
-    id: Number,
-    name: String,
-    description: String,
-    parentId?: Number,
+    id: number,
+    name: string,
+    description: string,
+    parentId?: number,
 }
 
 export default Category;
