@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getAllOrderProducts } from "../../../controllers/OrderProductsController";
+import { getAllOrderProducts, deleteOrderProduct } from "../../../controllers/OrderProductsController";
 import OrderProduct from "../../../models/OrderProduct";
 
 type OrderProductssListState = {
@@ -52,7 +52,13 @@ class OrderProductsList extends Component {
     }
 
     async delete(id: number) {
-
+        deleteOrderProduct(id)
+            .then(_ => {
+                this.componentDidMount();
+            })
+            .catch(_ => {
+                console.error("Failed to remove.");
+            })
     }
 
 }

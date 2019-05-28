@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Admin from "../../../models/Admin";
-import { getAllAdmins } from "../../../controllers/AdminsController";
+import { getAllAdmins, deleteAdmin } from "../../../controllers/AdminsController";
 
 type AdminsListState = {
     admins: Admin[]
@@ -24,6 +24,7 @@ class AdminsList extends Component {
             <th>{admin.id}</th>
             <td>{admin.email}</td>
             {/* <td>{user.password}</td> */}
+            <td><button onClick={this.delete.bind(this, admin.id)}>Delete</button></td>
         </tr>))
         return (
             <div>
@@ -33,6 +34,7 @@ class AdminsList extends Component {
                             <th>Id</th>
                             <th>Email</th>
                             {/* <th>Password</th> */}
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +43,16 @@ class AdminsList extends Component {
                 </table>
             </div>
         )
+    }
+
+    async delete(id: number) {
+        deleteAdmin(id)
+            .then(_ => {
+                this.componentDidMount();
+            })
+            .catch(_ => {
+                console.error("Failed to remove.");
+            })
     }
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getAllInventories } from "../../../controllers/InventoryController";
+import { deleteInventory, getAllInventories } from "../../../controllers/InventoryController";
 import Inventory from "../../../models/Inventory";
 
 type InventoriesListState = {
@@ -24,6 +24,7 @@ class InventoriesList extends Component {
             <th>{inventory.id}</th>
             <td>{inventory.productId}</td>
             <td>{inventory.inventoryCount}</td>
+            <td><button onClick={this.delete.bind(this, inventory.id)}>Delete</button></td>
         </tr>))
         return (
             <div>
@@ -33,6 +34,7 @@ class InventoriesList extends Component {
                             <th>Id</th>
                             <th>Product</th>
                             <th>Count</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +43,16 @@ class InventoriesList extends Component {
                 </table>
             </div>
         )
+    }
+
+    async delete(id: number) {
+        deleteInventory(id)
+            .then(_ => {
+                this.componentDidMount();
+            })
+            .catch(_ => {
+                console.error("Failed to remove.");
+            })
     }
 }
 

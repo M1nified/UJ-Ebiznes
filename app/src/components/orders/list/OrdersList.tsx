@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { getAllOrders } from "../../../controllers/OrdersController";
+import { getAllOrders, deleteOrder } from "../../../controllers/OrdersController";
 import { getAllUsers } from "../../../controllers/UsersController";
 import Order from "../../../models/Order";
 import User from "../../../models/User";
@@ -33,9 +33,10 @@ class OrdersList extends Component {
             const user = this.state.usersMap[order.userId];
             return (
                 <tr key={idx}>
-                    <td>{order.id}</td>
+                    <th>{order.id}</th>
                     <td>{user.name} {user.name2}</td>
                     <td><Link to={`/order/${order.id}`} >Details</Link></td>
+                    <td><button onClick={this.delete.bind(this, order.id)}>Delete</button></td>
                 </tr>
             )
         })
@@ -47,6 +48,7 @@ class OrdersList extends Component {
                             <th>Order ID</th>
                             <th>Client</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +57,16 @@ class OrdersList extends Component {
                 </table>
             </div>
         )
+    }
+
+    async delete(id: number) {
+        deleteOrder(id)
+            .then(_ => {
+                this.componentDidMount();
+            })
+            .catch(_ => {
+                console.error("Failed to remove.");
+            })
     }
 }
 

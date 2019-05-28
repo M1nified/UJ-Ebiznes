@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { deleteCategory, getAllCategories } from "../../../controllers/CategoryController";
 import Category from "../../../models/Category";
-import { getAllCategories } from "../../../controllers/CategoryController";
 
 type CategoriesListState = {
     categories: Category[]
@@ -22,18 +22,22 @@ class CategoriesList extends Component {
 
     render() {
         const categoryRows = this.state.categories.map((category, idx) => (<tr key={idx}>
+            <th>{category.id}</th>
             <td>{category.name}</td>
             <td>{category.description}</td>
             <td><Link to={`/category/${category.id}`} >Browse</Link></td>
+            <td><button onClick={this.delete.bind(this, category.id)}>Delete</button></td>
         </tr>))
         return (
             <div>
                 <table>
                     <thead>
                         <tr>
-                            <td>Name</td>
-                            <td>Description</td>
-                            <td></td>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +46,16 @@ class CategoriesList extends Component {
                 </table>
             </div>
         )
+    }
+
+    async delete(id: number) {
+        deleteCategory(id)
+            .then(_ => {
+                this.componentDidMount();
+            })
+            .catch(_ => {
+                console.error("Failed to remove.");
+            })
     }
 }
 
