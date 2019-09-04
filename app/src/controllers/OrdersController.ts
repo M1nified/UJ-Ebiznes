@@ -1,9 +1,28 @@
 import Axios from "axios";
+import moment from 'moment';
 import Order from "../models/Order";
 
 export type PostOrderBody = {
     userId: number,
     createdAt: Date,
+    country: string,
+    city: string,
+    address: string,
+    postal: string,
+    name1: string,
+    name2: string,
+}
+
+export type PostOrderResponseBody = {
+    id: number,
+    userId: number,
+    createdAt: Date,
+    country: string,
+    city: string,
+    address: string,
+    postal: string,
+    name1: string,
+    name2: string,
 }
 
 const getAllOrders = async () => {
@@ -28,7 +47,10 @@ const postOrder = async (body: PostOrderBody) => {
     try {
         const resp = await Axios.post(
             '/orders',
-            body,
+            {
+                ...body,
+                createdAt: moment(body.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            },
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +59,7 @@ const postOrder = async (body: PostOrderBody) => {
         );
         if (resp.status !== 201)
             return false;
-        return resp.data;
+        return <PostOrderResponseBody>resp.data;
     } catch (error) {
         return false;
     }

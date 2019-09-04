@@ -56,10 +56,11 @@ class Home extends Component {
 
         return (
             <div>
-                <Link to="/">Home</Link>
                 <div>
+                    Categories:
                     {categoriesList}
                 </div>
+                <hr />
                 <div>
                     <PublicProductsList categoryId={this.state.categoryId} />
                 </div>

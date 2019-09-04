@@ -21,6 +21,11 @@ import ProductsList from './components/products/list/ProductsList';
 import UserCreate from './components/users/create/UserCreate';
 import UsersList from './components/users/list/UsersList';
 import LoginRoute from './components/routes/login/LoginRoute';
+import Axios from 'axios';
+import Header from './components/common/header/Header';
+import ProductDetailsRoute from './components/routes/productDetails/ProductDetailsRoute';
+import CartRoute from './components/routes/cart/CartRoute';
+import OrderRoute from './components/routes/order/OrderRoute';
 
 axios.defaults.baseURL = 'http://localhost:9000';
 axios.defaults.withCredentials = true;
@@ -32,13 +37,32 @@ type AppState = {
 
 class App extends Component<any, AppState> {
 
+  async componentDidMount() {
+    try {
+      const x = await Axios.get('/me');
+      console.log(x);
+      if (x.status !== 200)
+        throw (`STATUS: ${x.status}`);
+      this.setState({
+        authenticated: true,
+      })
+    } catch (error) {
+      console.error(error);
+      this.setState({
+        authenticated: false,
+      })
+    }
+  }
+
   render() {
     return (
-      
+
       <div className="App container">
         <Router>
+          <Header />
           <Route exact path="/" component={Home} />
           <Route path="/c/:categoryId" component={Home} />
+          <Route path="/p/:productId" component={ProductDetailsRoute} />
           <Route path="/adminPanels" component={PanelsList} />
           <Route path="/admins" component={AdminsList} />
           <Route path="/adminAdd" component={AdminCreate} />
@@ -57,6 +81,8 @@ class App extends Component<any, AppState> {
           <Route path="/orderProducts" component={OrderProductsList} />
           <Route path="/orderProductAdd" component={PanelsList} />
           <Route path="/login" component={LoginRoute} />
+          <Route exact path="/cart" component={CartRoute} />
+          <Route exact path="/order" component={OrderRoute} />
         </Router>
       </div>
     );

@@ -3,6 +3,7 @@ import Category from "../../../models/Category";
 import { getAllCategories } from "../../../controllers/CategoryController";
 import { getProductsForCategory, getAllProducts } from "../../../controllers/ProductsController";
 import Product from "../../../models/Product";
+import { Link } from "react-router-dom";
 
 type PublicProductsListState = {
     products: Product[],
@@ -32,9 +33,11 @@ class PublicProductsList extends Component<PublicProductsListProps> {
     }
 
     async componentDidMount() {
-        const products = this.state.categoryId !== null
-            ? await getProductsForCategory(this.state.categoryId)
-            : await getAllProducts();
+        const products =
+            typeof this.state.categoryId !== 'undefined'
+                && this.state.categoryId !== null
+                ? await getProductsForCategory(this.state.categoryId)
+                : await getAllProducts();
         this.setState({
             products,
         })
@@ -55,7 +58,9 @@ class PublicProductsList extends Component<PublicProductsListProps> {
         const productsList = this.state.products
             .map((product, index) => (
                 <div key={index}>
-                    {product.name}
+                    <Link to={`/p/${product.id}`}>
+                        {product.name}
+                    </Link>
                 </div>
             ))
 

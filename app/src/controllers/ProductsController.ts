@@ -28,6 +28,15 @@ const getProductsForCategory = async (categoryId: number | string) => {
     }
 }
 
+const getProduct = async (productId: number | string) => {
+    try {
+        const product: Product = (await Axios.get(`/products/${productId}`)).data;
+        return product;
+    } catch (error) {
+        return null;
+    }
+}
+
 const postProduct = async (body: PostProductBody) => {
     try {
         const resp = await Axios.post(
@@ -58,5 +67,5 @@ const deleteProduct = async (id: number | string) => {
     }
 }
 
-export { getAllProducts, getProductsForCategory, postProduct, deleteProduct, };
+export { getAllProducts, getProductsForCategory, getProduct, postProduct, deleteProduct, };
 

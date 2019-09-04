@@ -5,7 +5,7 @@ class LoginRoute extends Component {
         return (
             <div>
                 <div className="container">
-                    <h2>Zaloguj się</h2>
+                    Login methods:
                     <div className="mb-3">
                         <a href="http://localhost:9000/authenticate/google" className="btn btn-primary">Google</a>
                     </div>

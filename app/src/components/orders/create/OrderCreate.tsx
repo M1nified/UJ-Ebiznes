@@ -11,6 +11,12 @@ class OrderCreate extends Component {
         order: {
             createdAt: new Date(),
             userId: -1,
+            country: "",
+            city: "",
+            address: "",
+            postal: "",
+            name1: "",
+            name2: "",
         }
     }
 
