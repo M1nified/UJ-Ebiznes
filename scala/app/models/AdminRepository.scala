@@ -1,12 +1,12 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ Future, ExecutionContext }
 
 @Singleton
-class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class AdminRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -33,7 +33,7 @@ class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
 
       into { case ((email, password), id) => Admin(id, email, password) }
 
-      ) += (email, password)
+    ) += ((email, password): (String, String))
   }
 
   def update(newValue: Admin): Future[Int] = db.run {
@@ -44,11 +44,11 @@ class AdminRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     admin.result
   }
 
-  def findById(id: Int): Future[Option[Admin]] = db.run{
+  def findById(id: Int): Future[Option[Admin]] = db.run {
     admin.filter(_.id === id).result.headOption
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def delete(id: Int): Future[Unit] = db.run {
     (admin.filter(_.id === id).delete).map(_ => ())
   }
 

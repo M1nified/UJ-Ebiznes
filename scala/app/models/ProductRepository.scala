@@ -1,13 +1,13 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 //import models.CategoryRepository
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ Future, ExecutionContext }
 
 @Singleton
-class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) {
+class ProductRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) {
   protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -23,7 +23,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def description = column[String]("product_description")
 
-//    def parentId = column[Int]("product_parent_id")
+    //    def parentId = column[Int]("product_parent_id")
 
     def price = column[Int]("product_price")
 
@@ -42,7 +42,6 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
   private val cat = TableQuery[CategoryTable]
 
-
   def create(name: String, description: String, price: Int, image: Option[String], unavailable: Boolean, categoryId: Int): Future[Product] = db.run {
 
     (product.map(c => (c.name, c.description, c.price, c.image, c.unavailable, c.categoryId))
@@ -51,10 +50,10 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
       into { case ((name, description, price, image, unavailable, categoryId), id) => Product(id, name, description, price, image, unavailable, categoryId) }
 
-      ) += (name, description, price, image, unavailable, categoryId)
+    ) += ((name, description, price, image, unavailable, categoryId): (String, String, Int, Option[String], Boolean, Int))
   }
 
-  def update(newValue: Product) = db.run{
+  def update(newValue: Product) = db.run {
     product.insertOrUpdate(newValue)
   }
 
@@ -62,15 +61,15 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
     product.result
   }
 
-  def findById(id: Int): Future[Option[Product]] = db.run{
+  def findById(id: Int): Future[Option[Product]] = db.run {
     product.filter(_.id === id).result.headOption
   }
 
-  def findByCategoryId(id: Int): Future[Seq[Product]] = db.run{
+  def findByCategoryId(id: Int): Future[Seq[Product]] = db.run {
     product.filter(_.categoryId === id).result
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def delete(id: Int): Future[Unit] = db.run {
     (product.filter(_.id === id).delete).map(_ => ())
   }
 }

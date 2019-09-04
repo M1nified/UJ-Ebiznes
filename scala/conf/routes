@@ -1,13 +1,31 @@
-
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Home page
+GET         /                                controllers.ApplicationController.index
+GET         /signOut                         controllers.ApplicationController.signOut
+GET         /authenticate/:provider          controllers.SocialAuthController.authenticate(provider)
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /signUp                          controllers.SignUpController.view
+POST        /signUp                          controllers.SignUpController.submit
 
-# Shop
+GET         /signIn                          controllers.SignInController.view
+POST        /signIn                          controllers.SignInController.submit
+
+GET         /password/forgot                 controllers.ForgotPasswordController.view
+POST        /password/forgot                 controllers.ForgotPasswordController.submit
+GET         /password/reset/:token           controllers.ResetPasswordController.view(token: java.util.UUID)
+POST        /password/reset/:token           controllers.ResetPasswordController.submit(token: java.util.UUID)
+GET         /password/change                 controllers.ChangePasswordController.view
+POST        /password/change                 controllers.ChangePasswordController.submit
+
+GET         /account/email/:email            controllers.ActivateAccountController.send(email: String)
+GET         /account/activate/:token         controllers.ActivateAccountController.activate(token: java.util.UUID)
+
+# API
+
+GET     /me                         controllers.ApplicationController.me
 
 GET     /products                   controllers.ProductsController.getAll
 +nocsrf
@@ -51,12 +69,8 @@ PUT     /inventories/:id            controllers.InventoriesController.update(id:
 +nocsrf
 DELETE  /inventories/:id            controllers.InventoriesController.delete(id: Int)
 
-GET     /users                      controllers.UsersController.getAll
-+nocsrf
-POST    /users                      controllers.UsersController.create
-GET     /users/:id                  controllers.UsersController.getById(id: Int)
-PUT     /users/:id                  controllers.UsersController.update(id: Int)
-+nocsrf
-DELETE  /users/:id                  controllers.UsersController.delete(id: Int)
 
-GET     /auth                       controllers.AuthController.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                    controllers.Assets.versioned(file)
+->          /webjars                         webjars.Routes

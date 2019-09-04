@@ -1,12 +1,12 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ Future, ExecutionContext }
 
 @Singleton
-class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -34,7 +34,7 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
 
     def postal = column[String]("user_postal")
 
-    def * = (id,  name, name2, password, email, country, street, city, address, postal) <> ((User.apply _).tupled, User.unapply)
+    def * = (id, name, name2, password, email, country, street, city, address, postal) <> ((User.apply _).tupled, User.unapply)
   }
 
   private val user = TableQuery[UserTable]
@@ -47,10 +47,10 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
 
       into { case ((name, name2, password, email, country, street, city, address, postal), id) => User(id, name, name2, password, email, country, street, city, address, postal) }
 
-      ) += (name, name2, password, email, country, street, city, address, postal)
+    ) += ((name, name2, password, email, country, street, city, address, postal): (String, String, String, String, String, String, String, String, String))
   }
 
-  def update(newValue: User) = db.run{
+  def update(newValue: User) = db.run {
     user.insertOrUpdate(newValue)
   }
 
@@ -58,11 +58,15 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
     user.result
   }
 
-  def findById(userId: Int): Future[Option[User]] = db.run{
+  def findById(userId: Int): Future[Option[User]] = db.run {
     user.filter(_.id === userId).result.headOption
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def findByEmail(email: String): Future[Option[User]] = db.run {
+    user.filter(_.email === email).result.headOption
+  }
+
+  def delete(id: Int): Future[Unit] = db.run {
     (user.filter(_.id === id).delete).map(_ => ())
   }
 }

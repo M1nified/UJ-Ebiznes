@@ -1,13 +1,13 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
-class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
+class InventoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
   protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -28,7 +28,6 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
     def * = (id, productId, inventoryCount) <> ((Inventory.apply _).tupled, Inventory.unapply)
   }
 
-
   private val inventory = TableQuery[InventoryTable]
 
   private val product = TableQuery[ProductTable]
@@ -41,10 +40,10 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
 
       into { case ((productId, inventoryCount), id) => Inventory(id, productId, inventoryCount) }
 
-      ) += (productId, inventoryCount)
+    ) += ((productId, inventoryCount): (Int, Int))
   }
 
-  def update(newValue: Inventory) = db.run{
+  def update(newValue: Inventory) = db.run {
     inventory.insertOrUpdate(newValue)
   }
 
@@ -52,11 +51,11 @@ class InventoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
     inventory.result
   }
 
-  def findById(id: Int): Future[Option[Inventory]] = db.run{
+  def findById(id: Int): Future[Option[Inventory]] = db.run {
     inventory.filter(_.id === id).result.headOption
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def delete(id: Int): Future[Unit] = db.run {
     (inventory.filter(_.id === id).delete).map(_ => ())
   }
 }

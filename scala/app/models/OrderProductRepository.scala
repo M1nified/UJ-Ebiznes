@@ -1,13 +1,13 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
-class OrderProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, orderRepository: OrderRepository, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
+class OrderProductRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, orderRepository: OrderRepository, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -43,14 +43,14 @@ class OrderProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider,
 
     (orderProduct.map(c => (c.orderId, c.productId, c.amount))
 
-      returning order.map(_.id)
+      returning orderProduct.map(_.id)
 
       into { case ((orderId, productId, amount), id) => OrderProduct(id, orderId, productId, amount) }
 
-      ) += (orderId, productId, amount)
+    ) += ((orderId, productId, amount): (Int, Int, Int))
   }
 
-  def update(newValue: OrderProduct) = db.run{
+  def update(newValue: OrderProduct) = db.run {
     orderProduct.insertOrUpdate(newValue)
   }
 
@@ -58,15 +58,15 @@ class OrderProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider,
     orderProduct.result
   }
 
-  def findById(id: Int): Future[Option[OrderProduct]] = db.run{
+  def findById(id: Int): Future[Option[OrderProduct]] = db.run {
     orderProduct.filter(_.id === id).result.headOption
   }
 
-  def findByOrderId(orderId: Int): Future[Seq[OrderProduct]] = db.run{
+  def findByOrderId(orderId: Int): Future[Seq[OrderProduct]] = db.run {
     orderProduct.filter(_.orderId === orderId).result
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def delete(id: Int): Future[Unit] = db.run {
     (orderProduct.filter(_.id === id).delete).map(_ => ())
   }
 }

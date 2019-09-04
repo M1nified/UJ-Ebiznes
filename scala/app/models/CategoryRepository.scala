@@ -1,12 +1,12 @@
 package models
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ Future, ExecutionContext }
 
 @Singleton
-class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   protected val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -22,7 +22,7 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
     def parentId = column[Option[Int]]("category_parent_id")
 
-    def parentId_fk = foreignKey("category_category_parent_id", parentId, category)(_.id)
+    def parentId_fk = foreignKey("category_category_parent_id", parentId, category)(u => u.id.?)
 
     def * = (id, name, description, parentId) <> ((Category.apply _).tupled, Category.unapply)
   }
@@ -37,10 +37,10 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
       into { case ((name, description, parentId), id) => Category(id, name, description, parentId) }
 
-      ) += (name, description, parentId)
+    ) += ((name, description, parentId): (String, String, Option[Int]))
   }
 
-  def update(newValue: Category) = db.run{
+  def update(newValue: Category) = db.run {
     category.insertOrUpdate(newValue)
   }
 
@@ -48,11 +48,11 @@ class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
     category.result
   }
 
-  def findById(id: Int): Future[Option[Category]] = db.run{
+  def findById(id: Int): Future[Option[Category]] = db.run {
     category.filter(_.id === id).result.headOption
   }
 
-  def delete(id: Int): Future[Unit] = db.run{
+  def delete(id: Int): Future[Unit] = db.run {
     (category.filter(_.id === id).delete).map(_ => ())
   }
 

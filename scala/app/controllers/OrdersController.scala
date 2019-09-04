@@ -21,6 +21,12 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
     mapping(
       "userId" -> number,
       "createdAt"-> sqlTimestamp,
+      "country" -> nonEmptyText,
+      "city" -> nonEmptyText,
+      "address" -> nonEmptyText,
+      "postal" -> nonEmptyText,
+      "name1" -> nonEmptyText,
+      "name2" -> nonEmptyText,
     )(CreateOrderForm.apply)(CreateOrderForm.unapply)
   }
 
@@ -55,6 +61,12 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
         orderRepository.create(
           order.userId,
           order.createdAt,
+          order.country,
+          order.city,
+          order.address,
+          order.postal,
+          order.name1,
+          order.name2,
         ).map { order =>
           Created(Json.toJson(order))
         }
@@ -74,6 +86,12 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
               id,
               order.userId,
               order.createdAt,
+              order.country,
+              order.city,
+              order.address,
+              order.postal,
+              order.name1,
+              order.name2,
             )).map({ _ =>
               Ok
             })
@@ -87,4 +105,4 @@ class OrdersController @Inject()(orderRepository: OrderRepository, cc: Controlle
 
 }
 
-case class CreateOrderForm(userId: Int, createdAt: Timestamp)
+case class CreateOrderForm(userId: Int, createdAt: Timestamp, country: String, city: String, address: String, postal: String, name1: String, name2: String)
