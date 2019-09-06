@@ -42,10 +42,10 @@ class CartRoute extends Component {
             <div>
                 <b>Cart:</b>
                 <div>
-                    {elementsList}
+                    {elementsList.length > 0 ? elementsList : "Cart is empty"}
                 </div>
                 <div>
-                    <Link to="/order">Order</Link>
+                    {elementsList.length > 0 ? (<Link to="/order">Order</Link>) : ""}
                 </div>
             </div>
         );

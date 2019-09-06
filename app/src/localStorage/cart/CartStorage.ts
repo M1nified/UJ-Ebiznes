@@ -19,7 +19,7 @@ const addToCart = (product: Product, amount: number) => {
 const getCart = (): CartModel => {
     const cartStorageJson = window.localStorage.getItem('cart');
     const cartStorage: CartModel = !cartStorageJson
-        ? getEmptyCart
+        ? getEmptyCart()
         : JSON.parse(cartStorageJson);
     return cartStorage;
 }
